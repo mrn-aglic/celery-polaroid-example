@@ -1,6 +1,7 @@
 from celery.utils.log import get_task_logger
 
 from celery_polaroid.app import config
+from celery_polaroid.celeryapp import app
 
 logger = get_task_logger(__name__)
 
