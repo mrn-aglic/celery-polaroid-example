@@ -17,7 +17,7 @@ worker_concurrency = 1
 
 broker_connection_retry_on_startup = False
 
-default_exchange = Exchange("default", type="direct")
+default_exchange = Exchange("default_exchange", type="direct")
 
 default_queue = Queue("default", default_exchange)
 
