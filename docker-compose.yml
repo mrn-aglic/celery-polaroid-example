@@ -1,6 +1,6 @@
 services:
   redis:
-    image: 'redis:alpine'
+    image: 'redis:latest'
     container_name: celery-polaroid-redis
     healthcheck:
       test: [ "CMD", "redis-cli","ping" ]
@@ -22,8 +22,22 @@ services:
       - scheduler
     env_file:
       - .env
-    entrypoint: [ './entrypoint.sh', 'worker', 'default' ]
+    environment:
+      - instance=worker
+    entrypoint: [ './entrypoint.sh', 'worker' ]
 
+  monitoring:
+    image: celery-polaroid
+    container_name: celery-polaroid-monitoring
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    environment:
+      - instance=monitoring
+    env_file:
+      - .env
+    entrypoint: ['./entrypoint.sh', 'monitoring']
 
   scheduler:
     build: .
